@@ -1,0 +1,33 @@
+parse args (parse_cmdline_args)
+   ||
+   ||
+   \/
+load xdp to kernal (load_bpf_and_xdp_attach)
+   ||
+   ||
+   \/
+turn on unlimited memory locking [prevents memory from being swapped to disk]
+   ||
+   ||
+   \/
+create segmentend memory space for packet buffers
+[packet size: FRAME_SIZE   number of packets: NUM_FRAMES] 
+   ||
+   ||
+   \/
+configure the memory above for umem use (configure_xsk_umem)
+   ||
+   ||
+   \/
+create af_xdp socket (xsk_configure_socket)
+   ||
+   ||
+   \/
+create thread that runs (stats_poll) that gets packet info
+[its passed the socket info struct (xsk_socket) ]
+   ||
+   ||
+   \/
+recive and process packets through (rx_and_process)
+
+rx_and_process(config, xsk_socket) ==> poll stuff? [google System V poll interface] ==> handle_receive_packets()  ==>  
